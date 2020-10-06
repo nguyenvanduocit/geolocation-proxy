@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	grpczap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
@@ -15,6 +16,7 @@ import (
 )
 
 func main() {
+
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 
 	logger, err := zap.NewDevelopment()
@@ -24,7 +26,7 @@ func main() {
 
 	conn, err := grpc.DialContext(
 		ctx,
-		"127.0.0.1:8282",
+		os.Getenv("SERVER_IP")+":30001",
 		grpc.WithInsecure(),
 		grpc.WithChainUnaryInterceptor(
 			grpczap.UnaryClientInterceptor(logger),
@@ -42,8 +44,8 @@ func main() {
 	response, err := client.Geolocate(ctx, &geolocationproto.GeolocationRequest{
 		HomeMobileCountryCode: 452,
 		HomeMobileNetworkCode: 1,
-		RadioType:             "GSM",
-		Carrier:               "vinaphone",
+		RadioType:             "gsm",
+		Carrier:               "Mobifone",
 		CellTowers: []*geolocationproto.CellTower{
 			{
 				CellId:            34641,
