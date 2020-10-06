@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option go_package = ".;geolocationproto";
+package geolocationproto;
+
+service GeolocationProxy {
+  rpc Geolocate(GeolocationRequest) returns (GeolocationResponse) {}
+}
+
+message CellTower {
+  int32 cell_id = 1;
+  int32 location_area_code = 2;
+  int32 mobile_country_code = 3;
+  int32 mobile_network_code = 4;
+  int32 signal_strength = 5;
+}
+
+message WifiAccessPoint {
+  string mac_address = 1;
+  double signal_strength = 2;
+  int32 channel = 3;
+  double signal_to_noise_ratio = 4;
+
+}
+
+message GeolocationRequest {
+  int32 home_mobile_country_code = 1;
+  int32 home_mobile_network_code = 2;
+  string radio_type = 3;
+  string carrier = 4;
+  repeated CellTower cellTowers = 5;
+  repeated WifiAccessPoint wifiAccessPoints = 6;
+}
+
+message Location {
+  double lat = 1;
+  double lng = 2;
+}
+
+message GeolocationResponse {
+  Location location = 1;
+  double accuracy = 2; //represents the radius of a circle around the given location
+}

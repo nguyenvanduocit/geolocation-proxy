@@ -1,0 +1,7 @@
+{
+  "addresses": [
+    "127.0.0.1:8282"
+  ],
+  "log_file": "./server.log",
+  "google_api_key": ""
+}
